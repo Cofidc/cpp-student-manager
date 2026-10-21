@@ -9,6 +9,10 @@ void printStudent(const Student& s){
 }
 //显示所有学生
 void printAllStudents(const vector<Student>& ss){
+    if(ss.empty()){
+        cout << "暂无学生信息\n";
+        return;
+    }
     for(const Student& s : ss){
         printStudent(s);
     }
