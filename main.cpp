@@ -27,7 +27,7 @@ int main(){
     students.push_back({1002,"小红",95});
 
     while(true){
-        cout << "“1”查看学生信息，“2”添加新学生，“3”修改成绩，“4”删除学生，“5”查找学生，“0”退出系统：";
+        cout << "“1”查看信息，“2”添加学生，“3”修改成绩，“4”修改姓名，“5”删除数据，“6”查找学生，“0”退出系统：";
         cin >> choice;
 
         if (!checkInput()) {
@@ -70,10 +70,28 @@ int main(){
                     cout << "修改成功\n";
             }
             else{
-                cout << "修改失败：学号不存在或成绩不合法\n";
+                cout << "修改失败\n";
             }
         }
         else if(choice==4){
+            int id;
+            string name;
+            cout << "请输入学号、姓名：";
+            cin >> id >> name;
+            if (!checkInput()) {
+                if (cin.eof()) {
+                    break;
+                }
+                continue;
+            }
+            if(updateName(students,id,name)){
+                    cout << "修改成功\n";
+            }
+            else{
+                cout << "修改失败\n";
+            }
+        }
+        else if(choice==5){
             int id;
             cout << "请输入学号：";
             cin >> id;
@@ -90,7 +108,7 @@ int main(){
                 cout << "删除失败\n";
             }
         }
-        else if(choice==5){
+        else if(choice==6){
             int id;
             cout << "请输入学号：";
             cin >> id;

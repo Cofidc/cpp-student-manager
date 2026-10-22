@@ -16,8 +16,10 @@ void printAllStudents(const std::vector<Student>& ss);
 bool hasStudent(const std::vector<Student>& students, int id);
 //增
 bool addStudent(std::vector<Student>& ss, const Student& ns);
-//改
+//改分
 bool updateScore(std::vector<Student>& students, int id, int newScore);
+//改名
+bool updateName(std::vector<Student>& students, int id,const std::string& newName);
 //删
 bool removeStudent(std::vector<Student>& students, int id);
 //查

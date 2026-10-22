@@ -34,7 +34,7 @@ bool addStudent(vector<Student>& ss, const Student& ns){
     ss.push_back(ns);
     return true;
 }
-//改
+//改分
 bool updateScore(vector<Student>& students, int id, int newScore) {
     if(newScore>100 || newScore <0){
         return false;
@@ -42,6 +42,20 @@ bool updateScore(vector<Student>& students, int id, int newScore) {
     for(Student& s:students){
         if(s.id==id){
             s.score=newScore;
+            return true;
+        }
+    }
+    return false;
+}
+//改名
+bool updateName(vector<Student>& students, int id,const string& newName)
+{
+    if(newName.empty()){
+        return false;
+    }
+    for(Student& student : students){
+        if(student.id==id){
+            student.name=newName;
             return true;
         }
     }
