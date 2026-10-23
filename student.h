@@ -2,10 +2,46 @@
 #include <string>
 #include <vector>
 
-struct Student{
-    int id;
+class Student {
+private:
+    int id=0;
+    int score = 0;
     std::string name;
-    int score;
+public:
+
+    bool setScore(int newScore) {
+        if(newScore>=0 && newScore<=100){
+			score=newScore;
+			return true;
+		}
+		return false;
+    }
+
+    int getScore() const{
+        return score;
+    }
+
+    bool setId(int newId){
+        if(newId>0){
+            id=newId;
+            return true;
+        }
+        return false;
+    }
+
+    int getId() const{
+        return id;
+    }
+    bool setName(const std::string& newName){
+        if(newName.empty()){
+            return false;
+        }
+        name=newName;
+        return true;
+    }
+    std::string getName() const{
+        return name;
+    }
 };
 
 //显示单个学生

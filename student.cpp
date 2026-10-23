@@ -5,7 +5,7 @@ using namespace std;
 
 //显示单个学生
 void printStudent(const Student& s){
-    cout << s.id << " " << s.name << " " << s.score << endl;
+    cout << s.getId() << " " << s.getName() << " " << s.getScore() << endl;
 }
 //显示所有学生
 void printAllStudents(const vector<Student>& ss){
@@ -20,43 +20,35 @@ void printAllStudents(const vector<Student>& ss){
 //判断学号是否存在
 bool hasStudent(const vector<Student>& students, int id) {
     for(const Student& s:students){
-        if(s.id==id){
+        if(s.getId()==id){
             return true;
         }
     }
     return false;
 }
 //增
-bool addStudent(vector<Student>& ss, const Student& ns){
-    if(hasStudent(ss,ns.id) || ns.score>100 || ns.score <0){
+bool addStudent(vector<Student>& students, const Student& newStudent){
+    if(newStudent.getId()<=0 || newStudent.getName().empty() 
+    || hasStudent(students, newStudent.getId())){
         return false;
     }
-    ss.push_back(ns);
+    students.push_back(newStudent);
     return true;
 }
 //改分
 bool updateScore(vector<Student>& students, int id, int newScore) {
-    if(newScore>100 || newScore <0){
-        return false;
-    }
     for(Student& s:students){
-        if(s.id==id){
-            s.score=newScore;
-            return true;
+        if(s.getId()==id){
+            return s.setScore(newScore);
         }
     }
     return false;
 }
 //改名
-bool updateName(vector<Student>& students, int id,const string& newName)
-{
-    if(newName.empty()){
-        return false;
-    }
+bool updateName(vector<Student>& students, int id,const string& newName){
     for(Student& student : students){
-        if(student.id==id){
-            student.name=newName;
-            return true;
+        if(student.getId()==id){
+            return student.setName(newName);
         }
     }
     return false;
@@ -64,7 +56,7 @@ bool updateName(vector<Student>& students, int id,const string& newName)
 //删
 bool removeStudent(vector<Student>& students, int id) {
     for (size_t i = 0; i < students.size(); i++) {
-        if(students[i].id==id){
+        if(students[i].getId()==id){
             students.erase(students.begin()+i);
             return true;
         }
@@ -74,7 +66,7 @@ bool removeStudent(vector<Student>& students, int id) {
 //查
 bool printStudentById(const vector<Student>& students, int id) {
     for(const Student& student:students){
-        if(student.id==id){
+        if(student.getId()==id){
             printStudent(student);
             return true;
         }
