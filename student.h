@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <stdexcept>
+#include <iostream>
 
 class Student {
 private:
@@ -8,6 +10,19 @@ private:
     int score = 0;
     std::string name;
 public:
+     Student(int newId,const std::string& newName,int newScore)
+    :id(newId),score(newScore),name(newName)
+    {
+        if(id<=0){
+            throw std::invalid_argument("学号必须为正数");
+        }
+        if(name.empty()){
+            throw std::invalid_argument("姓名不能为空");
+        }
+        if(score<0 || score>100){
+            throw std::invalid_argument("成绩不合法");
+        }
+    }
 
     bool setScore(int newScore) {
         if(newScore>=0 && newScore<=100){
@@ -44,19 +59,20 @@ public:
     }
 };
 
+class StudentManager {
+private:
+    std::vector<Student> students;
+
+    bool hasStudent(int id) const;
+
+public:
+    bool addStudent(const Student& newStudent);
+    void printAllStudents() const;
+    bool printStudentById(int id) const;
+    bool updateScore(int id, int newScore);
+    bool updateName(int id, const std::string& newName);
+    bool removeStudent(int id);
+};
+
 //显示单个学生
 void printStudent(const Student& s);
-//显示所有学生
-void printAllStudents(const std::vector<Student>& ss);
-//判断学号是否存在
-bool hasStudent(const std::vector<Student>& students, int id);
-//增
-bool addStudent(std::vector<Student>& ss, const Student& ns);
-//改分
-bool updateScore(std::vector<Student>& students, int id, int newScore);
-//改名
-bool updateName(std::vector<Student>& students, int id,const std::string& newName);
-//删
-bool removeStudent(std::vector<Student>& students, int id);
-//查
-bool printStudentById(const std::vector<Student>& students, int id);

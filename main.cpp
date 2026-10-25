@@ -22,17 +22,13 @@ bool checkInput() {
 
 int main(){
     int choice=0;
-    vector<Student> students;
-    Student s1;
-    s1.setId(1001);
-    s1.setName("小明");
-    s1.setScore(90);
-    students.push_back(s1);
-    Student s2;
-    s2.setId(1002);
-    s2.setName("小红");
-    s2.setScore(95);
-    students.push_back(s2);
+    StudentManager manager;
+
+    Student s1(1001, "小明", 90);
+    Student s2(1002, "小红", 95);
+
+    manager.addStudent(s1);
+    manager.addStudent(s2);
 
     while(true){
         cout << "“1”查看信息，“2”添加学生，“3”修改成绩，“4”修改姓名，“5”删除数据，“6”查找学生，“0”退出系统：";
@@ -45,10 +41,9 @@ int main(){
             continue;
         }
         if(choice==1){
-            printAllStudents(students);
+            manager.printAllStudents();
         }
         else if(choice==2){
-            Student newStudent;
             int id,score;
             string name;
             cout << "请输入学号，姓名，成绩：";
@@ -59,16 +54,17 @@ int main(){
                 }
                 continue;
             }
-            if(newStudent.setId(id) && newStudent.setName(name) && newStudent.setScore(score)){
-                if(addStudent(students, newStudent)){
+            try{
+                Student newStudent(id,name,score);
+                if(manager.addStudent(newStudent)){
                     cout << "添加成功\n";
                 }
                 else{
                     cout << "添加失败:学号已存在\n";
                 }
             }
-            else{
-                cout << "添加失败：检查输入合法性\n";
+            catch(const invalid_argument& e){
+                cout << "添加失败：" << e.what() << '\n';
             }
         }
         else if(choice==3){
@@ -81,7 +77,7 @@ int main(){
                 }
                 continue;
             }
-            if(updateScore(students,id,score)){
+            if(manager.updateScore(id,score)){
                     cout << "修改成功\n";
             }
             else{
@@ -99,7 +95,7 @@ int main(){
                 }
                 continue;
             }
-            if(updateName(students,id,name)){
+            if(manager.updateName(id,name)){
                     cout << "修改成功\n";
             }
             else{
@@ -116,7 +112,7 @@ int main(){
                 }
                 continue;
             }
-            if(removeStudent(students,id)){
+            if(manager.removeStudent(id)){
                     cout << "删除成功\n";
             }
             else{
@@ -133,7 +129,7 @@ int main(){
                 }
                 continue;
             }
-            if(!(printStudentById(students,id))){
+            if(!(manager.printStudentById(id))){
                     cout << "查找失败\n";
             }
         }
